@@ -19,5 +19,5 @@ Plan of development:
 - make webhook
 - deploy
 
-<a href='https://github.com/eternnoir/pyTelegramBotAPI'>pyTelegramBotAPI library GitHub</a>
+<a href='https://github.com/eternnoir/pyTelegramBotAPI'>pyTelegramBotAPI library GitHub</a><br>
 <a href='https://docs.python.org/3/library/venv.html'>Venv</a>
