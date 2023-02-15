@@ -18,3 +18,5 @@ Plan of development:
 - merge functions, so bot can show both schedules
 - make webhook
 - deploy
+
+<a href='https://github.com/eternnoir/pyTelegramBotAPI'>pyTelegramBotAPI library GitHub</a>
