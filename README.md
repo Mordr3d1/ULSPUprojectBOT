@@ -1,6 +1,6 @@
 # ULSPUprojectBOT
 
-Telegram bot that shows schedule for students and teachers.
+Telegram bot that shows schedule for students and teachers of our university.
 
 Repository:
 - main.py is the main file
