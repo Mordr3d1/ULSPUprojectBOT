@@ -20,3 +20,4 @@ Plan of development:
 - deploy
 
 <a href='https://github.com/eternnoir/pyTelegramBotAPI'>pyTelegramBotAPI library GitHub</a>
+<a href='https://docs.python.org/3/library/venv.html'>Venv</a>
