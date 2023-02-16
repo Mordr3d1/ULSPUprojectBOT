@@ -5,7 +5,7 @@ import telebot
 from telebot import types
 from config.config import BOT_API_TOKEN
 from utils.jsonwork import get_json, take_info, student_json
-from utils.dates import *
+from utils.keyboard import *
 global group_number
 
 bot = telebot.TeleBot(BOT_API_TOKEN)
