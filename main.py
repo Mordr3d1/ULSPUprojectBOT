@@ -1,5 +1,4 @@
 import telebot
-import os
 
 from config.config import BOT_API_TOKEN
 from utils.jsonwork import get_json, take_info, student_json
