@@ -9,6 +9,6 @@ get_dates()
 with open('utils/dateslist', 'r') as f:
     dates = [line.strip() for line in f]
 
-keyboard = types.ReplyKeyboardMarkup(row_width=1)
+keyboard = types.ReplyKeyboardMarkup(row_width=1, one_time_keyboard=True)
 for item in dates:
     keyboard.add(item)
