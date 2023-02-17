@@ -19,9 +19,7 @@ def student_json(group_number, week):
 
 
 def get_json():
-    """" Файл тайм тайбл """
     f = open('utils/timetable', "w")
-    """" Айди студентов который был создан с помощью костыля"""
     f2 = open('utils/jsonhere', 'r')
     id = f2.read()
     req = Request(
