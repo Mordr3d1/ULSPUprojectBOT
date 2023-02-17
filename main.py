@@ -1,11 +1,12 @@
-# main file
-
 import telebot
+import os
 
-from telebot import types
 from config.config import BOT_API_TOKEN
 from utils.jsonwork import get_json, take_info, student_json
-from utils.keyboard import *
+from utils.keyboard import keyboard
+
+
+
 global group_number
 
 bot = telebot.TeleBot(BOT_API_TOKEN)
@@ -54,4 +55,3 @@ if __name__ == "__main__":
     bot.enable_save_next_step_handlers(delay=2)
     bot.load_next_step_handlers()
     bot.infinity_polling()
-

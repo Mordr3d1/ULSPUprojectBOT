@@ -1,6 +1,6 @@
-import json, pprint, re
+import json, re
 from urllib.request import Request, urlopen
-from datetime import datetime
+
 
 def student_json(group_number, week):
     group_number = group_number

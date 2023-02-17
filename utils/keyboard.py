@@ -6,8 +6,6 @@ from utils.jsonwork import get_dates
 get_dates()
 
 
-
-
 with open('utils/dateslist', 'r') as f:
     dates = [line.strip() for line in f]
 
