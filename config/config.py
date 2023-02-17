@@ -5,6 +5,6 @@ import os
 
 load_dotenv()
 
-dotenv.load_dotenv('.env.dist')
+dotenv.load_dotenv('.env')
 
 BOT_API_TOKEN = os.getenv("BOT_TOKEN")
