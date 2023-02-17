@@ -22,7 +22,7 @@ def start(message):
 def dates(message):
     global group_number
     group_number = message.text
-    msg = bot.reply_to(message, "Выбирите неделю", reply_markup=keyboard)
+    message = bot.reply_to(message, "Выбирите неделю", reply_markup=keyboard)
     bot.register_next_step_handler(message,test)
 
 
