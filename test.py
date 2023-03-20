@@ -59,6 +59,34 @@ def final_sort_day():
 
 
 def sort_2_days():
+    dates_to_compare = open('utils/withoutdate', 'r')
+    dates = dates_to_compare.readlines()
+
+    dates_in_file = open('utils/timetable', 'r')
+    file_dates = dates_in_file.readlines()
+
+    ver = dates[0]
+    dup = 1
+
+    for v in file_dates:
+        while ver == file_dates[7*dup]:
+            dup = dup + 1
+            ver = file_dates[7*dup]
+            if ver != file_dates[7*dup]:
+                print(ver)
+
+
+
+
+
+
+
+
+sort_2_days()
+
+
+    #for line in text:
+        #sorted_day.write("%s" % line)
 
 
 
