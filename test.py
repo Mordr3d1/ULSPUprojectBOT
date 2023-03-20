@@ -9,7 +9,7 @@ def compare():
     text = f.read(18)  #Ровное колличество символов первой строки, очень важно!
     f2.write(text)
 
-def final_sort():
+def final_sort_day():
     dates_to_compare = open('utils/withoutdate', 'r')
     dates = dates_to_compare.readlines()
 
