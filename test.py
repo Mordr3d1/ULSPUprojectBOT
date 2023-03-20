@@ -46,12 +46,17 @@ def final_sort_day():
 
             else:
                 break
+        if dates[0] == file_dates[7]:
+            text.append('\n')
+            for line in file_dates[8:13]:
+                text.append(line)
+
 
     for line in text:
         sorted_day.write("%s" % line)
 
 
-
+final_sort_day()
 
 
 
