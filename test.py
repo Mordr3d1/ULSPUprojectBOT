@@ -56,7 +56,12 @@ def final_sort_day():
         sorted_day.write("%s" % line)
 
 
-final_sort_day()
+
+
+def sort_2_days():
+
+
+
 
 
 
