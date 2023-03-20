@@ -1,23 +1,69 @@
-import re,json
-import string
-
-
+import re
 #Будет убирать повторения в одном дне
 
-
-
-
-def test():
+#Создаёт файл даты для сравнения
+# Не обязательная функция
+def compare():
     f = open('utils/timetable', 'r', encoding='utf-8')
     f2 = open('utils/withoutdate', 'w', encoding='utf-8')
-    text = f.read(18)
+    text = f.read(18)  #Ровное колличество символов первой строки, очень важно!
     f2.write(text)
 
-#test()
+def final_sort():
+    dates_to_compare = open('utils/withoutdate', 'r')
+    dates = dates_to_compare.readlines()
 
-# Записывает файл неотформотированный и удаляет дату
+    dates_in_file = open('utils/timetable', 'r')
+    file_dates = dates_in_file.readlines()
+
+    sorted_day = open('utils/sortedday.txt', 'w')
+
+    text = []
+
+    a = 2
+    b = 3
+    c = 2
+
+    for v in dates:
+        for line in file_dates[0:6]:    # Строчка по умолчанию
+            text.append(line)
+
+        if dates[0] == file_dates[7] == file_dates[14]:
+            text.append('\n')
+            for line in file_dates[8:13]:
+                text.append(line)
+
+            while dates[0] == file_dates[7 * c]:
+                c = c + 1
+
+                text.append('\n')
+
+                for line in file_dates[7*a+1:7*b-1]:
+                    text.append(line)
+
+                a = a + 1
+                b = b + 1
+
+            else:
+                break
+
+    for line in text:
+        sorted_day.write("%s" % line)
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+#Мусорная тестовая функция
 def test2():
 
     with open('utils/withoutdate', 'r', encoding='utf-8' ) as dates_to_compare:
@@ -54,8 +100,10 @@ def test3():
 
     sorted_day =  open('utils/sortedday.txt', 'w', encoding='utf-8')
 
+    text = []
     a = 2
     b = 3
+
     for v in dates:
         if v in file_dates[0]:
 
@@ -77,53 +125,8 @@ def test3():
 
 
 
-test3()
 
 
-def test4():
-    dates_to_compare = open('utils/withoutdate', 'r', encoding='utf-8')
-    dates = dates_to_compare.readlines(1)
-
-    dates_in_file = open('utils/timetable', 'r', encoding='utf-8')
-
-    file_dates = dates_in_file.readlines()
-
-    sorted_day = open('utils/sortedday.txt', 'w', encoding='utf-8')
-
-    text = []
-
-    a = 2
-    b = 3
-    for v in dates:
-        if v in file_dates[0]:
-            for line in file_dates[0:6]:
-                text.append('\n')
-                text.append(file_dates[0:6])
-                sorted_day.write(f"{text}\n")
-    print(text)
-
-
-
-
-
-
-          #"""  sorted_day.write(str(file_dates[0:6]))
-            #sorted_day.write('\n')
-            #if v in file_dates[7]:
-              #  sorted_day.write('\n')
-               # sorted_day.write(str(file_dates[8:13]))
-              #  sorted_day.write('\n')
-                #while v in file_dates[7 * a]:
-                   # sorted_day.write('\n')
-                   # sorted_day.write(str(file_dates[7 * a + 1:7 * b - 1]))
-                   # a = a + 1
-                   # b = b + 1
-                   # sorted_day.write('\n')
-
-          #  else:
-               # break"""
-
-# Привести к нормальному виду
 
 
 
@@ -198,7 +201,7 @@ def sorted_data():
     theFile.close()
 
 
-
+# Сортировка тест
 def sort_normal3():
     file = open('utils/sortedday.txt', 'r', encoding='utf-8')
     theFile = open('utils/testsrtfin.txt', 'w')
@@ -214,13 +217,6 @@ def sort_normal3():
     print(modified)
     #for line in read:
         #theFile.write(f"{line}\n")
-
-sort_normal3()
-
-
-
-
-
 
 # Создание json файла Тест
 
