@@ -1,7 +1,7 @@
 import telebot
 
 from config.config import BOT_API_TOKEN
-from utils.jsonwork import get_json, take_info, student_json
+from utils.jsonwork import schedule
 from utils.keyboard import keyboard
 
 
@@ -10,28 +10,30 @@ global group_number
 
 bot = telebot.TeleBot(BOT_API_TOKEN)
 
+MESS_MAX_LENGTH = 4096
 
 @bot.message_handler(commands=['start'])
 def start(message):
     bot.reply_to(message, 'Пожалуйста, введите номер учебной группы:')
-    bot.register_next_step_handler(message, dates)
+    bot.register_next_step_handler(message, day)
 
 
 
 
-def dates(message):
+def day(message):
     global group_number
     group_number = message.text
-    message = bot.reply_to(message, "Выбирите неделю", reply_markup=keyboard)
-    bot.register_next_step_handler(message,test)
+    message = bot.reply_to(message, "Выбирите день", reply_markup=keyboard)
+    bot.register_next_step_handler(message,group_number_def)
 
 
-def test(message):
-    week = message.text
-    student_json(group_number, week)
-    get_json()
-    msg = take_info()
-    bot.send_message(message.chat.id, msg)
+def group_number_def(message):
+    day = message.text
+    raspisanie = schedule(group_number, day)
+    for x in range(0, len(raspisanie), MESS_MAX_LENGTH):
+        shraspis = raspisanie[x: x + MESS_MAX_LENGTH]
+        bot.send_message(message.chat.id, shraspis)
+
 
 
 @bot.message_handler(commands=['help'])
