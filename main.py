@@ -15,15 +15,15 @@ MESS_MAX_LENGTH = 4096
 @bot.message_handler(commands=['start'])
 def start(message):
     bot.reply_to(message, 'Пожалуйста, введите номер учебной группы:')
-    bot.register_next_step_handler(message, day)
+    bot.register_next_step_handler(message, day_of_week)
 
 
 
 
-def day(message):
+def day_of_week(message):
     global group_number
     group_number = message.text
-    message = bot.reply_to(message, "Выбирите день", reply_markup=keyboard)
+    message = bot.reply_to(message, "Выбирите день", reply_markup=keyboard) # Форма ГГГГ-ММ-ДД
     bot.register_next_step_handler(message,group_number_def)
 
 

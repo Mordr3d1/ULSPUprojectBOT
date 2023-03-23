@@ -1,32 +1,36 @@
-import json
-
-
-import datetime
-
-from datetime import datetime
+import json, datetime
 from urllib.request import Request, urlopen
+
+from requests import get
 
 from requests import get
 
 
 '''Дни недели'''
 def day_week(day):
-    day = datetime.datetime.strptime(day, "%Y-%m-%d").date()
+    if day == 'Сегодня':
+        day = datetime.date.today()
+
+    elif day == 'Завтра':
+        day = datetime.date.today()
+        day = day + datetime.timedelta(days=1)
+
+    day = datetime.datetime.strptime(str(day), "%Y-%m-%d").date()
     day = day.weekday()
     if day == 0:
-        return ' (понедельник)'
+        return ' (Понедельник)'
     elif day == 1:
-        return ' (вторник)'
+        return ' (Вторник)'
     elif day == 2:
-        return ' (среда)'
+        return ' (Среда)'
     elif day == 3:
-        return ' (четверг)'
+        return ' (Четверг)'
     elif day == 4:
-        return ' (пятница)'
+        return ' (Пятница)'
     elif day == 5:
-        return ' (суббота)'
+        return ' (Суббота)'
     elif day == 6:
-        return ' (воскресенье)'
+        return ' (Воскресенье)'
 
 
 
@@ -36,18 +40,27 @@ def day_week(day):
 
 
 def schedule(group_number, day):
-    f = open('utils/jsonhere', 'w')
-    req = get(
-        url=f'https://raspi.ulspu.ru/json/dashboard/events?mode=group&value={group_number}',
-        headers={'User-Agent': 'Mozila/5.0'}
-    )
-    raspis =  raspis = 'Расписание на ' + day + day_week(day) + ':\n'
+
+    if day == 'Сегодня':
+        day = datetime.date.today()
+
+    elif day == 'Завтра':
+        day = datetime.date.today()
+        day = day + datetime.timedelta(days=1)
 
 
-    day = datetime.datetime.strptime(day, "%Y-%m-%d").date()
+    req = get(f'https://raspi.ulspu.ru/json/dashboard/events?mode=group&value={group_number}')
 
-    raw_schedudle = json.load(req.text)
+
+    raw_schedudle = json.loads(req.text)
     raw_raspisanie = []
+
+
+    raspis =  raspis = 'Расписание на ' + str(day) + day_week(day) + ':\n'+ '\n'
+
+
+    day = datetime.datetime.strptime(str(day), "%Y-%m-%d").date()
+
 
     para = 1
 
@@ -69,14 +82,14 @@ def schedule(group_number, day):
         endtime = datetime.timedelta(hours=endt.hour, minutes=endt.minute, seconds=endt.second,microseconds=endt.microsecond) + datetime.timedelta(hours=4, minutes=0, seconds=0,microseconds=0)
 
         if starttime == lasttime:
-            raspis = raspis + item['title'] + ' Время: ' + str(starttime)[:-3] + '-' + str(endtime)[:-3] + '\n'
+            raspis = raspis + item['title'] + '\n' + 'Время: ' +'\n' + str(starttime)[:-3] + '-' + str(endtime)[:-3] + '\n'
         else:
             nopara = starttime - lasttime
             if nopara // prodpara > 4:
                 para = para + nopara // prodpara - 1
             else:
                 para = para + nopara // prodpara
-            raspis = raspis + str(para) + ' пара \n' + item['title'] + ' Время: ' + str(starttime)[:-3] + '-' + str(
+            raspis ='\n' + raspis + str(para) + ' Пара \n' + item['title'] + ' Время: ' + str(starttime)[:-3] + '-' + str(
                 endtime)[:-3] + '\n'
             lasttime = starttime
     if len(raspis) <= 40:
