@@ -31,14 +31,8 @@ def day_week(day):
         return ' (Суббота)'
     elif day == 6:
         return ' (Воскресенье)'
-
-
-
-'''Создаёт файл со всем расписанием'''
-
-
 def ListSchedule(group_number, day):
-    prname = group_number.replace(' ', '%20')
+    group_number = group_number.replace(' ', '%20')
     day = datetime.datetime.strptime(str(day), "%Y-%m-%d").date()
     req = get(f"https://raspi.ulspu.ru/json/dashboard/events?mode=group&value={group_number}")
     raw_schedudle = json.loads(req.text)
@@ -48,8 +42,6 @@ def ListSchedule(group_number, day):
         if day == dayrspis:
             raw_raspisanie.append(item)
     return sorted(raw_raspisanie, key=lambda x: datetime.datetime.strptime(x['start'], "%Y-%m-%dT%H:%M:%S.%fZ").time())
-
-
 def SplitTitle(rlist):
     for item in rlist:
         hlp1=item['title'].split(' - ')
@@ -60,15 +52,11 @@ def SplitTitle(rlist):
         hlp1.pop(2)
         item['title']=hlp1
     return rlist
-
 def FormatTitle(rlist):
     rlist=SplitTitle((rlist))
     for item in rlist:
         item['title'] = '*Дисциплина:* '+ item['title'][0] + ' \n*Тип занятия:* '+ item['title'][1] + ' \n*Группа:*' + item['title'][2] + ' \n*Аудитория:* ' + item['title'][3]
     return rlist
-
-
-
 def schedule(group_number, day):
 
     if day == 'Сегодня':
@@ -116,4 +104,4 @@ def schedule(group_number, day):
         else:
             return raspis
     else:
-        return 'На данного преподавателя нет расписания. Убедитесь, что правильно ввели фамилию и инициалы преподавателя. '
+        return 'У данной группы нет занятий в этот день '
