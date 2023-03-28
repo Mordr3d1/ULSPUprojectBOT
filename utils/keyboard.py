@@ -10,7 +10,8 @@ def date_day():
     with  open('dateslist.txt', 'w+') as file:
         file.write('Сегодня' + '\n')
         file.write('Завтра' + '\n')
-        file.write('На неделю')
+        file.write('На неделю'+ '\n')
+        file.write('На две недели'+ '\n')
 
    # Выбор дня
 date_day()

@@ -23,7 +23,7 @@ def start(message):
 def day_of_week(message):
     global group_number
     group_number = message.text
-    message = bot.reply_to(message, "Выбирите день", reply_markup=keyboard) # Форма ГГГГ-ММ-ДД
+    message = bot.reply_to(message, "Выбирите день", reply_markup=keyboard)
     bot.register_next_step_handler(message,group_number_def)
 
 
