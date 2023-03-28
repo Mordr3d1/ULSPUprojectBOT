@@ -11,6 +11,6 @@ result = (d1 - d2).days//7
 result = result * (-1)
 
 if result == 53:
-    print('Работает')
+
 print(result)
 
