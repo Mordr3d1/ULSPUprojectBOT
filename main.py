@@ -32,7 +32,7 @@ def group_number_def(message):
     raspisanie = schedule(group_number, day)
     for x in range(0, len(raspisanie), MESS_MAX_LENGTH):
         shraspis = raspisanie[x: x + MESS_MAX_LENGTH]
-        bot.send_message(message.chat.id, shraspis)
+        bot.send_message(message.chat.id, shraspis, parse_mode ='Markdown')
 
 
 
