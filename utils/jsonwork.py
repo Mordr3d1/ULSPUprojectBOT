@@ -1,7 +1,5 @@
 import json, datetime
-from urllib.request import Request, urlopen
 
-from requests import get
 
 from requests import get
 
