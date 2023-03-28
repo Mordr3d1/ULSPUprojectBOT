@@ -1,10 +1,10 @@
 import json, datetime
 
+from datetime import date
 
 from requests import get
 
 
-'''Дни недели'''
 def day_week(day):
     if day == 'Сегодня':
         day = datetime.date.today()
@@ -12,6 +12,7 @@ def day_week(day):
     elif day == 'Завтра':
         day = datetime.date.today()
         day = day + datetime.timedelta(days=1)
+
 
     day = datetime.datetime.strptime(str(day), "%Y-%m-%d").date()
     day = day.weekday()
@@ -29,6 +30,13 @@ def day_week(day):
         return ' (Суббота)'
     elif day == 6:
         return ' (Воскресенье)'
+
+
+
+
+
+
+
 def ListSchedule(group_number, day):
     group_number = group_number.replace(' ', '%20')
     day = datetime.datetime.strptime(str(day), "%Y-%m-%d").date()
