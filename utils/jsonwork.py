@@ -33,10 +33,6 @@ def day_week(day):
 
 
 
-
-
-
-
 def ListSchedule(group_number, day):
     group_number = group_number.replace(' ', '%20')
     day = datetime.datetime.strptime(str(day), "%Y-%m-%d").date()
@@ -68,7 +64,7 @@ def schedule(group_number, day):
     if day == 'Сегодня':
         day = datetime.date.today()
 
-    elif day == 'Завтра':
+    if day == 'Завтра':
         day = datetime.date.today()
         day = day + datetime.timedelta(days=1)
 

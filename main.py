@@ -1,12 +1,18 @@
 import telebot
 
+import datetime
+
 from config.config import BOT_API_TOKEN
 from utils.jsonwork import schedule
 from utils.keyboard import keyboard
 
+from datetime import date
 
+from utils.Test import student_json,get_json,take_info
 
 global group_number
+
+global week
 
 bot = telebot.TeleBot(BOT_API_TOKEN)
 
@@ -29,10 +35,41 @@ def day_of_week(message):
 
 def group_number_def(message):
     day = message.text
-    raspisanie = schedule(group_number, day)
-    for x in range(0, len(raspisanie), MESS_MAX_LENGTH):
-        shraspis = raspisanie[x: x + MESS_MAX_LENGTH]
-        bot.send_message(message.chat.id, shraspis, parse_mode ='Markdown')
+    if day == 'На неделю':
+        d1 = date(2022, 8, 26)
+        d2 = datetime.date.today()
+        day = (d1 - d2).days // 7
+        day = day *(-1)
+        student_json(group_number,day)
+        get_json()
+        msg = take_info()
+        bot.send_message(message.chat.id,msg)
+
+    elif  day == 'На две недели':
+        d1 = date(2022, 8, 26)
+        d2 = datetime.date.today()
+        day = (d1 - d2).days // 7
+        day = day *(-1)
+        student_json(group_number,day)
+        get_json()
+        msg = take_info()
+        bot.send_message(message.chat.id,msg)
+
+        d1 = date(2022, 8, 26)
+        d2 = datetime.date.today()
+        day = (d1 - d2).days // 7
+        day = day *(-1)
+        day = day + 1
+        student_json(group_number,day)
+        get_json()
+        msg = take_info()
+        bot.send_message(message.chat.id,msg)
+
+    else:
+        raspisanie = schedule(group_number, day)
+        for x in range(0, len(raspisanie), MESS_MAX_LENGTH):
+            shraspis = raspisanie[x: x + MESS_MAX_LENGTH]
+            bot.send_message(message.chat.id, shraspis, parse_mode ='Markdown')
 
 
 
