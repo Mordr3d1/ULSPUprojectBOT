@@ -50,15 +50,6 @@ def group_number_def(message):
         d2 = datetime.date.today()
         day = (d1 - d2).days // 7
         day = day *(-1)
-        student_json(group_number,day)
-        get_json()
-        msg = take_info()
-        bot.send_message(message.chat.id,msg)
-
-        d1 = date(2022, 8, 26)
-        d2 = datetime.date.today()
-        day = (d1 - d2).days // 7
-        day = day *(-1)
         day = day + 1
         student_json(group_number,day)
         get_json()
