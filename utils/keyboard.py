@@ -1,28 +1,14 @@
-## generate keyboard here
 import urllib.request
 
 from telebot import types
 
+from telebot import types
 
-
-
-def date_day():
-    with  open('dateslist.txt', 'w+') as file:
-        file.write('Сегодня' + '\n')
-        file.write('Завтра' + '\n')
-        file.write('На неделю'+ '\n')
-        file.write('На две недели'+ '\n')
-
-   # Выбор дня
-date_day()
-
-
-
-with open('dateslist.txt', 'r') as f:
-    dates = [line.strip('') for line in f]
-
-
-
-keyboard = types.ReplyKeyboardMarkup(row_width=1, one_time_keyboard=True)
-for item in dates:
-    keyboard.add(item)
+def chois_buttons():
+    markup = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+    bt1 = types.KeyboardButton('на сегодня')
+    bt2 = types.KeyboardButton('на эту неделю')
+    bt3 = types.KeyboardButton('на завтра')
+    bt4 = types.KeyboardButton('на следующую неделю')
+    markup.add(bt1, bt2, bt3, bt4)
+    return markup

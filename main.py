@@ -1,67 +1,60 @@
 import telebot
 
-import datetime
-
 from config.config import BOT_API_TOKEN
-from utils.jsonwork import schedule
-from utils.keyboard import keyboard
+from utils.jsonwork import *
 
-from datetime import date
+from utils.keyboard import *
 
-from utils.Test import student_json,get_json,take_info
-
-global group_number
-
-global week
 
 bot = telebot.TeleBot(BOT_API_TOKEN)
 
-MESS_MAX_LENGTH = 4096
+MESS_MAX_LENGTH = 3000
+
+group_number = ''
+
+def send_schedule(listRaspis, message):
+    raspis = listRaspis[0]
+    for x in range(1, len(listRaspis)):
+        if len(raspis + listRaspis[x]) < MESS_MAX_LENGTH:
+            raspis += listRaspis[x]
+        else:
+            bot.send_message(message.chat.id, raspis, parse_mode='Markdown', reply_markup=telebot.types.ReplyKeyboardRemove())
+            raspis = listRaspis[x]
+    if raspis:
+        bot.send_message(message.chat.id, raspis, parse_mode='Markdown', reply_markup=telebot.types.ReplyKeyboardRemove())
+
 
 @bot.message_handler(commands=['start'])
-def start(message):
+def gr_start(message):
     bot.reply_to(message, 'Пожалуйста, введите номер учебной группы:')
-    bot.register_next_step_handler(message, day_of_week)
+    bot.register_next_step_handler(message, gr_day_of_week)
 
 
-
-
-def day_of_week(message):
+def gr_day_of_week(message):
     global group_number
-    group_number = message.text
-    message = bot.reply_to(message, "Выбирите день", reply_markup=keyboard)
-    bot.register_next_step_handler(message,group_number_def)
-
-
-def group_number_def(message):
-    day = message.text
-    if day == 'На неделю':
-        d1 = date(2022, 8, 26)
-        d2 = datetime.date.today()
-        day = (d1 - d2).days // 7
-        day = day *(-1)
-        student_json(group_number,day)
-        get_json()
-        msg = take_info()
-        bot.send_message(message.chat.id,msg)
-
-    elif  day == 'На две недели':
-        d1 = date(2022, 8, 26)
-        d2 = datetime.date.today()
-        day = (d1 - d2).days // 7
-        day = day *(-1)
-        day = day + 1
-        student_json(group_number,day)
-        get_json()
-        msg = take_info()
-        bot.send_message(message.chat.id,msg)
-
+    group_number = group(message.text)
+    if group_number:
+        message = bot.reply_to(message, "Выбирите временной промежуток", reply_markup=chois_buttons())
+        bot.register_next_step_handler(message,group_schedule)
     else:
-        raspisanie = schedule(group_number, day)
-        for x in range(0, len(raspisanie), MESS_MAX_LENGTH):
-            shraspis = raspisanie[x: x + MESS_MAX_LENGTH]
-            bot.send_message(message.chat.id, shraspis, parse_mode ='Markdown')
+        bot.send_message(message.chat.id, 'Данной учебной группы не существует')
 
+
+def group_schedule(message):
+    global group_number
+    msg = message.text
+    if msg == 'на сегодня':
+        listRaspis = gr_today_raspis(group_number)
+        send_schedule(listRaspis, message)
+    elif msg == 'на завтра':
+        listRaspis = gr_tomorrow_raspis(group_number)
+        send_schedule(listRaspis, message)
+    elif msg == 'на эту неделю':
+        listRaspis = gr_this_week_schedule(group_number)
+        send_schedule(listRaspis, message)
+    elif msg == 'на следующую неделю':
+        listRaspis = gr_next_week_schedule(group_number)
+        send_schedule(listRaspis, message)
 
 
 @bot.message_handler(commands=['help'])
@@ -69,18 +62,14 @@ def start(message):
     bot.send_message(message.chat.id, 'Help command')
 
 
-
-
 ## should be at the bottom, after all other function
 @bot.message_handler(func=lambda messages: True)
 def any_message(message):
-    msg = "Cannot understand you. Please, enter '/help' or '/start' "
+    msg = "Не корректно введено сообщение, введите '/help' or '/start' "
     bot.reply_to(message, msg)
 
-
+    
 
 ## load next step handlers if needed here
 if __name__ == "__main__":
-    bot.enable_save_next_step_handlers(delay=2)
-    bot.load_next_step_handlers()
     bot.infinity_polling()
